@@ -1,0 +1,11 @@
+sudo: required
+services:
+  - docker
+script:
+  - docker build -t devOpsArno .
+after_success:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - docker tag devOpsArno $DOCKER_USER/devOpsArno:$TRAVIS_BUILD_NUMBER
+  - docker push $DOCKER_USER/devOpsArno:$TRAVIS_BUILD_NUMBER
+  - docker tag devOpsArno $DOCKER_USER/devOpsArno:latest
+  - docker push $DOCKER_USER/devOpsArno:latest
